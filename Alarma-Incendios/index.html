@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="./BoxTheCamera.js"></script>
+    <script src="./FireAnimation.js"></script>
+    <script src="./Simulation.js"></script>
+    <style>
+      .TextBox {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(255, 255, 255, 0.733);
+        padding: 10px;
+        border: 1px solid #7575759a;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene physics="debug: true">
+      <a-entity
+        id="Model"
+        gltf-model="#Scene"
+        fit-box
+        position="0 0 0"
+      ></a-entity>
+
+      <a-entity
+        id="camera"
+        camera
+        limit-camera
+        look-controls="pointerLockEnabled: true"
+        wasd-controls="acceleration:60"
+        position="0 1.2 0"
+      ></a-entity>
+
+      <a-sky color="#C1DAD6"></a-sky>
+
+      <a-light type="ambient" color="#fff"></a-light>
+      <a-light type="point" color="#2e2e2e" position="0,2,0"></a-light>
+      <a-sound id="Fire" src="url(./assets/Fire.mp3)"></a-sound>
+      <a-sound id="FireAlarm" src="url(./assets/FireAlarm.mp3)"></a-sound>
+    </a-scene>
+
+    <a-assets>
+      <a-asset-item
+        id="Scene"
+        src="./models/Office/office.glb"
+      ></a-asset-item>
+    </a-assets>
+
+    <div class="TextBox">Presione [i] para iniciar la simulacion</div>
+    <!-- <audio id="FireSound" src="./assets/Fire.mp3" preload="auto"></audio>
+    <audio id="FireAlarm" src="./assets/FireAlarm.mp3" preload="auto"></audio> -->
+  </body>
+</html>
