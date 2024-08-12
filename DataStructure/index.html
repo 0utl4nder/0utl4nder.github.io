@@ -14,15 +14,23 @@
           <label id="firstNameInfo" for="firstName">Nombre(s):</label>
           <input type="text" id="firstName" name="firstName" required />
 
-          <label id="lastNameInfo" for="lastName">Apellido(s): <span class="lastName"></span> </label>
+          <label id="lastNameInfo" for="lastName"
+            >Apellido(s): <span class="lastName"></span>
+          </label>
           <input type="text" id="lastName" name="lastName" required />
-          <label id="phoneInfo"for="phone">Telefono (+57): <span class="phone"></span></label>
+          <label id="phoneInfo" for="phone"
+            >Telefono (+57): <span class="phone"></span
+          ></label>
           <input type="tel" id="phone" name="phone" required />
 
-          <label id="addressInfo"for="address">Direccion: <span class="address"></span></label>
+          <label id="addressInfo" for="address"
+            >Direccion: <span class="address"></span
+          ></label>
           <input type="text" id="address" name="address" required />
 
-          <button type="button" onclick="addUser()">Agregar Paciente</button>
+          <button class="addBtn" type="button" onclick="addUser()">
+            Agregar Paciente
+          </button>
         </form>
       </div>
       <div>
@@ -31,32 +39,45 @@
       </div>
     </div>
 
-    <div id="appointmentModal" class="modal">
+    <div id="userEditModal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Agregar Cita</h2>
-        <form id="appointmentForm">
-          <label id="dateInfo" for="date">Fecha:</label>
-          <input type="date" id="date" name="date" required />
-
-          <label id="timeInfo" for="time">Hora:</label>
-          <input type="time" id="time" name="time" required />
-
-          <label id="doctorInfo" for="doctor">Doctor:</label>
-          <input type="text" id="doctor" name="doctor" required />
-
-          <label id="reasonInfo" for="reason">Razon:</label>
-          <input type="text" id="reason" name="reason" required />
-
-          <button type="button" onclick="submitAppointment()">
-            Agregar Cita
+        <span class="close" onclick="closeUserEditModal()">&times;</span>
+        <h2>Editar Usuario</h2>
+        <form id="userEditForm">
+          <label id="editFirstNameInfo" for="editFirstName">Nombre(s):</label>
+          <input type="text" id="editFirstName" name="editFirstName" required />
+          <label id="editLastNameInfo" for="editLastName">Apellido(s):</label>
+          <input type="text" id="editLastName" name="editLastName" required />
+          <label id="editPhoneInfo" for="editPhone">Telefono (+57):</label>
+          <input type="tel" id="editPhone" name="editPhone" required />
+          <label id="editAddressInfo" for="editAddress">Direccion:</label>
+          <input type="text" id="editAddress" name="editAddress" required />
+          <button class="addBtn" type="button" onclick="updateUser()">
+            Actualizar Usuario
           </button>
         </form>
       </div>
     </div>
 
-  
-
+    <div id="appointmentModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeAppointmentModal()">&times;</span>
+        <h2>Editar Cita</h2>
+        <form id="appointmentForm">
+          <label id="dateInfo" for="date">Fecha:</label>
+          <input type="date" id="date" name="date" required />
+          <label id="timeInfo" for="time">Hora:</label>
+          <input type="time" id="time" name="time" required />
+          <label id="doctorInfo" for="doctor">Doctor:</label>
+          <input type="text" id="doctor" name="doctor" required />
+          <label id="specialtyInfo" for="specialty">Especialidad:</label>
+          <select id="specialty" name="specialty" required></select>
+          <button class="addBtn" type="button" onclick="submitAppointment()">
+            Agregar Cita
+          </button>
+        </form>
+      </div>
+    </div>
     <script src="js/app.js"></script>
   </body>
 </html>

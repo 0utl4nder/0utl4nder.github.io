@@ -28,14 +28,14 @@ class UserList {
     return newUser;
   }
 
-  addAppointment(user, date, time, doctor, reason) {
+  addAppointment(user, date, time, doctor, specialty) {
     if (user) {
-      user.appointments.add(date, time, doctor, reason);
+      user.appointments.add(date, time, doctor, specialty);
     }
   }
 
   getList() {
-    let list = [];
+    const list = [];
     let current = this.head;
     while (current) {
       list.push(current);
@@ -47,14 +47,32 @@ class UserList {
   getAppointments(user) {
     return user ? user.appointments.getList() : [];
   }
+
+  removeUser(index) {
+    if (index === 0) {
+      this.head = this.head.next;
+      return;
+    }
+    let current = this.head;
+    let prev = null;
+    let currentIndex = 0;
+    while (current && currentIndex < index) {
+      prev = current;
+      current = current.next;
+      currentIndex++;
+    }
+    if (current) {
+      prev.next = current.next;
+    }
+  }
 }
 
 class Appointment {
-  constructor(date, time, doctor, reason) {
+  constructor(date, time, doctor, specialty) {
     this.date = date;
     this.time = time;
     this.doctor = doctor;
-    this.reason = reason;
+    this.specialty = specialty;
     this.next = null;
   }
 }
@@ -64,8 +82,8 @@ class AppointmentList {
     this.head = null;
   }
 
-  add(date, time, doctor, reason) {
-    const newAppointment = new Appointment(date, time, doctor, reason);
+  add(date, time, doctor, specialty) {
+    const newAppointment = new Appointment(date, time, doctor, specialty);
     if (!this.head) {
       this.head = newAppointment;
     } else {
@@ -78,7 +96,7 @@ class AppointmentList {
   }
 
   getList() {
-    let list = [];
+    const list = [];
     let current = this.head;
     while (current) {
       list.push(current);
@@ -86,15 +104,40 @@ class AppointmentList {
     }
     return list;
   }
+
+  removeAppointment(index) {
+    if (index === 0) {
+      this.head = this.head.next;
+      return;
+    }
+    let current = this.head;
+    let prev = null;
+    let currentIndex = 0;
+    while (current && currentIndex < index) {
+      prev = current;
+      current = current.next;
+      currentIndex++;
+    }
+    if (current) {
+      prev.next = current.next;
+    }
+  }
 }
 
-const userList = new UserList();
+const specialties = [
+  "Medicina General",
+  "Cardiologia",
+  "Dermatologia",
+  "Neurologia",
+  "Pediatria",
+  "Psiquiatria",
+];
 
 function textValidator(value) {
-  element = document.getElementById(value);
+  const element = document.getElementById(value);
   if (element) {
     if (element.value === "") {
-      content = document.getElementById(`${value}Info`).textContent;
+      const content = document.getElementById(`${value}Info`).textContent;
       document.getElementById(
         `${value}Info`
       ).innerHTML = `${content} <span class="error">Campo requerido.</span>`;
@@ -106,15 +149,15 @@ function textValidator(value) {
 }
 
 function phoneValidator(value) {
-  element = document.getElementById(value);
+  const element = document.getElementById(value);
   if (element) {
-    if (element.value == "") {
-      content = document.getElementById(`${value}Info`).textContent;
+    if (element.value === "") {
+      const content = document.getElementById(`${value}Info`).textContent;
       document.getElementById(
         `${value}Info`
       ).innerHTML = `${content} <span class="error">Campo requerido.</span>`;
-    } else if (isNaN(element.value) || element.value.length != 10) {
-      content = document.getElementById(`${value}Info`).textContent;
+    } else if (isNaN(element.value) || element.value.length !== 10) {
+      const content = document.getElementById(`${value}Info`).textContent;
       document.getElementById(
         `${value}Info`
       ).innerHTML = `${content} <span class="error">El telefono debe ser valido.</span>`;
@@ -131,42 +174,79 @@ function clearInfo() {
   document.getElementById("phoneInfo").innerHTML = "Telefono (+57): ";
   document.getElementById("addressInfo").innerHTML = "Direccion: ";
 
+  document.getElementById("editFirstNameInfo").innerHTML = "Nombre(s): ";
+  document.getElementById("editLastNameInfo").innerHTML = "Apellido(s): ";
+  document.getElementById("editPhoneInfo").innerHTML = "Telefono (+57): ";
+  document.getElementById("editAddressInfo").innerHTML = "Direccion: ";
+
   document.getElementById("dateInfo").innerHTML = "Fecha: ";
   document.getElementById("timeInfo").innerHTML = "Hora: ";
   document.getElementById("doctorInfo").innerHTML = "Doctor: ";
-  document.getElementById("reasonInfo").innerHTML = "Razon: ";
+  document.getElementById("specialtyInfo").innerHTML = "Especialidad: ";
 }
+
+function populateSpecialties() {
+  const specialtySelect = document.getElementById("specialty");
+  specialtySelect.innerHTML = "";
+  specialties.forEach((specialty) => {
+    const option = document.createElement("option");
+    option.value = specialty;
+    option.textContent = specialty;
+    specialtySelect.appendChild(option);
+  });
+}
+
+const userList = new UserList();
+let currentUser = null;
 
 function addUser() {
   clearInfo();
-  firstName = textValidator("firstName");
-  lastName = textValidator("lastName");
-  phone = phoneValidator("phone");
-  address = textValidator("address");
+  const firstName = textValidator("firstName");
+  const lastName = textValidator("lastName");
+  const phone = phoneValidator("phone");
+  const address = textValidator("address");
 
   if (
-    firstName == "Not Valid" ||
-    lastName == "Not Valid" ||
-    phone == "Not Valid" ||
-    address == "Not Valid"
+    firstName === "Not Valid" ||
+    lastName === "Not Valid" ||
+    phone === "Not Valid" ||
+    address === "Not Valid"
   ) {
     return;
   }
 
+  clearInfo();
   userList.add(firstName, lastName, phone, address);
   updateUserList();
   document.getElementById("userForm").reset();
 }
 
-let currentUser = null;
-
-function openModal(user) {
+function openAppointmentModal(user) {
   currentUser = user;
   document.getElementById("appointmentModal").style.display = "block";
+  populateSpecialties();
 }
 
-function closeModal() {
+function closeAppointmentModal() {
   document.getElementById("appointmentModal").style.display = "none";
+  document.getElementById("appointmentForm").reset();
+  const addButton = document.querySelector("#appointmentForm button");
+  addButton.textContent = "Agregar Cita";
+  addButton.onclick = submitAppointment;
+}
+
+function openUserEditModal(user) {
+  currentUser = user;
+  document.getElementById("editFirstName").value = user.firstName;
+  document.getElementById("editLastName").value = user.lastName;
+  document.getElementById("editPhone").value = user.phone;
+  document.getElementById("editAddress").value = user.address;
+  document.getElementById("userEditModal").style.display = "block";
+}
+
+function closeUserEditModal() {
+  document.getElementById("userEditModal").style.display = "none";
+  document.getElementById("userEditForm").reset();
 }
 
 function submitAppointment() {
@@ -174,20 +254,20 @@ function submitAppointment() {
   const date = textValidator("date");
   const time = textValidator("time");
   const doctor = textValidator("doctor");
-  const reason = textValidator("reason");
+  const specialty = document.getElementById("specialty").value;
 
   if (
-    date == "Not Valid" ||
-    time == "Not Valid" ||
-    doctor == "Not Valid" ||
-    reason == "Not Valid"
+    date === "Not Valid" ||
+    time === "Not Valid" ||
+    doctor === "Not Valid" ||
+    !specialty
   ) {
     return;
   }
 
-  userList.addAppointment(currentUser, date, time, doctor, reason);
+  userList.addAppointment(currentUser, date, time, doctor, specialty);
   updateUserList();
-  closeModal();
+  closeAppointmentModal();
 }
 
 function updateUserList() {
@@ -195,20 +275,24 @@ function updateUserList() {
   userListElement.innerHTML = "";
 
   const users = userList.getList();
-  users.forEach((user) => {
+  users.forEach((user, index) => {
     const li = document.createElement("li");
-    li.textContent = `Nombre: ${user.firstName} ${user.lastName}, Telefono: ${user.phone}, Direccion: ${user.address}`;
-
-    const addAppointmentButton = document.createElement("button");
-    addAppointmentButton.textContent = "Agregar Cita";
-    addAppointmentButton.onclick = () => openModal(user);
-    li.appendChild(addAppointmentButton);
+    li.innerHTML = `
+      <span> <b>Nombre:</b> ${user.firstName} ${user.lastName}, <b>Telefono:</b> ${user.phone}, <b>Direccion:</b> ${user.address}</span>
+      <button class="editBtn" onclick="openUserEditModal(userList.getList()[${index}])">Editar</button>
+      <button class="deleteBtn" onclick="deleteUser(${index})">Eliminar</button>
+      <button class="addBtn" onclick="openAppointmentModal(userList.getList()[${index}])">Agregar Cita</button>
+    `;
 
     const appointmentList = document.createElement("ul");
     const appointments = userList.getAppointments(user);
-    appointments.forEach((appointment) => {
+    appointments.forEach((appointment, appIndex) => {
       const appointmentLi = document.createElement("li");
-      appointmentLi.textContent = `Cita: ${appointment.date} ${appointment.time}, Doctor: ${appointment.doctor}, Razon: ${appointment.reason}`;
+      appointmentLi.innerHTML = `
+        <span><b>Cita:</b> ${appointment.date} ${appointment.time}, <b>Doctor:</b> ${appointment.doctor}, <b>Especialidad:</b> ${appointment.specialty}</span>
+        <button class="editBtn" onclick="editAppointment(${index}, ${appIndex})">Editar</button>
+        <button class="deleteBtn" onclick="deleteAppointment(${index}, ${appIndex})">Eliminar</button>
+      `;
       appointmentList.appendChild(appointmentLi);
     });
     li.appendChild(appointmentList);
@@ -216,3 +300,86 @@ function updateUserList() {
     userListElement.appendChild(li);
   });
 }
+
+function updateUser() {
+  clearInfo();
+  const firstName = textValidator("editFirstName");
+  const lastName = textValidator("editLastName");
+  const phone = phoneValidator("editPhone");
+  const address = textValidator("editAddress");
+
+  if (
+    firstName === "Not Valid" ||
+    lastName === "Not Valid" ||
+    phone === "Not Valid" ||
+    address === "Not Valid"
+  ) {
+    return;
+  }
+
+  currentUser.firstName = firstName;
+  currentUser.lastName = lastName;
+  currentUser.phone = phone;
+  currentUser.address = address;
+
+  updateUserList();
+  closeUserEditModal();
+}
+
+function deleteUser(index) {
+  userList.removeUser(index);
+  updateUserList();
+}
+
+function editAppointment(userIndex, appointmentIndex) {
+  const user = userList.getList()[userIndex];
+  const appointment = userList.getAppointments(user)[appointmentIndex];
+  document.getElementById("date").value = appointment.date;
+  document.getElementById("time").value = appointment.time;
+  document.getElementById("doctor").value = appointment.doctor;
+  document.getElementById("specialty").value = appointment.specialty;
+
+  openAppointmentModal(user);
+  const addButton = document.querySelector("#appointmentForm button");
+  addButton.textContent = "Actualizar Cita";
+  addButton.onclick = function () {
+    updateAppointment(userIndex, appointmentIndex);
+  };
+}
+
+function updateAppointment(userIndex, appointmentIndex) {
+  clearInfo();
+  const date = textValidator("date");
+  const time = textValidator("time");
+  const doctor = textValidator("doctor");
+  const specialty = document.getElementById("specialty").value;
+
+  if (
+    date === "Not Valid" ||
+    time === "Not Valid" ||
+    doctor === "Not Valid" ||
+    !specialty
+  ) {
+    return;
+  }
+
+  const user = userList.getList()[userIndex];
+  const appointment = userList.getAppointments(user)[appointmentIndex];
+  appointment.date = date;
+  appointment.time = time;
+  appointment.doctor = doctor;
+  appointment.specialty = specialty;
+
+  updateUserList();
+  closeAppointmentModal();
+}
+
+function deleteAppointment(userIndex, appointmentIndex) {
+  const user = userList.getList()[userIndex];
+  user.appointments.removeAppointment(appointmentIndex);
+  updateUserList();
+}
+window.onload = function () {
+  updateUserList();
+  populateSpecialties();
+};
