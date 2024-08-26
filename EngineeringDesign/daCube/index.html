@@ -4,12 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>daCube</title>
-    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <div id="root"></div>
 
     <script type="module" src="index.js"></script>
+    <script>
+      function isChromiumBased() {
+        const userAgent = navigator.userAgent;
+        return (
+          /Chrome|Chromium|Edg|Brave|Opera/.test(userAgent) &&
+          !/Firefox/.test(userAgent)
+        );
+      }
+
+      if (isChromiumBased()) {
+        alert("For the best experience, please use a Gecko-based browser like Firefox.");
+      }
+    </script>
   </body>
 </html>
