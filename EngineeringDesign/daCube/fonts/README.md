@@ -6,13 +6,15 @@ For more information see:
 * https://github.com/ryanoasis/nerd-fonts/
 * https://github.com/ryanoasis/nerd-fonts/releases/latest/
 
-# IBM 3270
+# Agave
 
-A 3270 font in a modern format.
+**Agave** is a succulent monospaced programming font.
 
-For more information have a look at the upstream website: https://github.com/rbanffy/3270font
+https://b.agaric.net/page/agave
 
-Version: 3.0.1
+For more information have a look at the upstream website: https://github.com/blobject/agave
+
+Version: v37
 
 ## Which font?
 

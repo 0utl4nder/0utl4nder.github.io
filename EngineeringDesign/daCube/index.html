@@ -6,79 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>daCube</title>
     <style>
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+      @font-face {
+        font-family: 'Agave';
+        src: url("fonts/Agave.ttf") format("truetype");
       }
 
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0;
-        }
-      }
-
-*{
-  font-family: 'Arial', sans-serif;
-}
-
-      .fade-in {
-        animation: fadeIn 0.5s forwards;
-      }
-
-      .fade-out {
-        animation: fadeOut 0.5s forwards;
+      body{
+        font-family: 'Agave';
       }
     </style>
-    <title>3ed</title>
-    <script type="module" crossorigin src="assets/index-5YSUVzqt.js"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-DxkFTwjz.css">
+    <script type="module" crossorigin src="/assets/index-DggchLYh.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DwzHD3fp.css">
   </head>
   <body>
-    <div style="transition: all 0.2 ease-in-out" id="root"></div>
-    <div
-      id="shapeMenu"
-      style="
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 10;
-        background: rgba(0, 0, 0, 0.9);
-        padding: 10px;
-        border-radius: 5px;
-        color: white;
-      "
-    >
-      <label for="shapeSelect">Select Shape: </label>
-      <select id="shapeSelect">
-        <option value="0">Cube</option>
-        <option value="1">Sphere</option>
-        <option value="2">Triangle</option>
-      </select>
-    </div>
-    
-    <div
-      id="colorPickerContainer"
-      style="
-        position: absolute;
-        top: 60px;
-        left: 20px;
-        z-index: 10;
-        background: rgba(0, 0, 0, 0.9);
-        padding: 10px;
-        border-radius: 5px;
-        color: white;
-      "
-    >
-      <label for="colorPicker">Shape Color: </label>
-      <input type="color" id="colorPicker" value="#539539" />
-    </div>
+    <div id="root"></div>
 
   </body>
 </html>
