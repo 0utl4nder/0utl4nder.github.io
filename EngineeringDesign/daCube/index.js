@@ -31917,11 +31917,11 @@ const AT = () => {
       [u, d] = He.useState(0),
       [h, f] = He.useState(0),
       p = [
-        "sound/Malware.mp3",
-        "sound/Code science.mp3",
-        "sound/Parameters.mp3",
-        "sound/Metal Instrumental 1.mp3",
-        "sound/Metal Instrumental 2.mp3",
+        "https://0utl4nder.github.io/EngineeringDesign/daCube/sound/Malware.mp3",
+        "https://0utl4nder.github.io/EngineeringDesign/daCube/sound/Code science.mp3",
+        "https://0utl4nder.github.io/EngineeringDesign/daCube/sound/Parameters.mp3",
+        "https://0utl4nder.github.io/EngineeringDesign/daCube/sound/Metal Instrumental 1.mp3",
+        "https://0utl4nder.github.io/EngineeringDesign/daCube/sound/Metal Instrumental 2.mp3",
       ];
     return (
       He.useEffect(() => {
