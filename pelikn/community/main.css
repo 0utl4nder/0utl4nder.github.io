@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #313131;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  max-width: 1200px;
+  height: 80vh;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.left-side,
+.right-side {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-side {
+  background-color: #2e2e2e;
+  padding: 40px;
+  justify-content: space-between;
+}
+
+.text-content h1 {
+  font-size: 2.5em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.text-content p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.social-links {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon {
+  color: #fff;
+  font-size: 2em;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.3);
+}
+
+.social-icon:nth-child(1):hover {
+  color: #0077b5; /* LinkedIn color */
+}
+
+.social-icon:nth-child(2):hover {
+  color: #7289da; /* Discord color */
+}
+
+.right-side {
+  background-color: #2e2e2e;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  background-image: url("./extra.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.logo img {
+  max-width: 80%;
+  height: auto;
+}
+
+.extra-image img {
+  max-width: 60%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .right-side {
+    order: 1;
+    align-items: center;
+    background-image: none;
+  }
+
+  .left-side {
+    order: 2; /* Coloca la bienvenida después */
+    padding: 20px;
+  }
+
+  .text-content h1 {
+    font-size: 2em;
+  }
+
+  .text-content p {
+    font-size: 1em;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .logo img {
+    max-width: 70%;
+    margin-bottom: 20px;
+  }
+}
